@@ -1,4 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Snake2d from './snake2d';
 
-ReactDOM.render(<div />, document.getElementById('gameBoard'));
+ReactDOM.render(<Snake2d />, document.getElementById('gameBoard'));
