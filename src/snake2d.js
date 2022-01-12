@@ -104,13 +104,15 @@ const Snake2D = () => {
             <canvas
                 ref={canvasRef}
                 style={{
-                    border: 3,
+                    border: 5,
                     borderColor: '#000',
                     borderStyle: 'solid',
                     borderRadius: 5,
+                    opacity: gameOver ? 0.4 : 1
                 }}
                 width={`${CANVAS_SIZE}[0]`}
                 height={`${CANVAS_SIZE}[1]`} />
+            {gameOver && <h1 style={{position: 'absolute'}}>GAME OVER</h1>}
         </div >
     )
 }
