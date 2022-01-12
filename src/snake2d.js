@@ -21,13 +21,24 @@ const Snake2D = () => {
 
     useInterval(() => gameLoop(), speed);
 
+    const startGame = () => {
+        gameBoard.current.focus();
+        setSnake(SNAKE_START);
+        setApple(APPLE_START);
+        setDirection([0, -1]);
+        setSpeed(SPEED);
+        setGameOver(false);
+    }
+
     const endGame = () => {
         setSpeed(null);
         setGameOver(true);
     }
 
-    const moveSnake = ({keyCode}) =>
+    const moveSnake = ({keyCode}) => {
+        keyCode === 82 && gameOver && startGame();
         keyCode >= 37 && keyCode <= 40 && setDirection(DIRECTIONS[keyCode]);
+    }
 
     const createApple = () =>
         apple.map((_a, i) => Math.floor(Math.random() * (CANVAS_SIZE[i] / SCALE)));
@@ -68,14 +79,8 @@ const Snake2D = () => {
         setSnake(snakeCopy);
     };
 
-    useEffect(() => {
-        gameBoard.current.focus();
-        setSnake(SNAKE_START);
-        setApple(APPLE_START);
-        setDirection([0, -1]);
-        setSpeed(SPEED);
-        setGameOver(false);
-    }, [])
+
+    useEffect(() => startGame(), []);
 
     useEffect(() => {
         const context = canvasRef.current.getContext("2d");
@@ -112,7 +117,7 @@ const Snake2D = () => {
                 }}
                 width={`${CANVAS_SIZE}[0]`}
                 height={`${CANVAS_SIZE}[1]`} />
-            {gameOver && <h1 style={{position: 'absolute'}}>GAME OVER</h1>}
+            {gameOver && <h1 style={{position: 'absolute', textAlign: 'center'}}>GAME OVER<br />PRESS 'R' TO RESTART</h1>}
         </div >
     )
 }

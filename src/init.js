@@ -1,6 +1,6 @@
 export const CANVAS_SIZE = [700, 700]
 export const SCALE = 20
-export const SPEED = 120
+export const SPEED = 130
 export const SNAKE_START = [
     [8, 7],
     [8, 8],
