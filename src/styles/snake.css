@@ -1,0 +1,366 @@
+/* ==========================================================================
+   Snake 2D Modern Arcade Theme Stylesheet
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0b0f19;
+  color: #f3f4f6;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 16px 10px;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+.snake-game-wrapper {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Header & Score Badges
+   -------------------------------------------------------------------------- */
+.snake-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.brand-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.snake-title {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+
+.snake-subtitle {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+.scores-container {
+  display: flex;
+  gap: 8px;
+}
+
+.score-card {
+  background: rgba(31, 41, 55, 0.7);
+  border: 1px solid rgba(75, 85, 99, 0.4);
+  backdrop-filter: blur(8px);
+  padding: 6px 14px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 72px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.score-card.best-card {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(31, 41, 55, 0.85);
+}
+
+.score-card-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #9ca3af;
+}
+
+.score-card.best-card .score-card-label {
+  color: #fbbf24;
+}
+
+.score-card-val {
+  font-size: 20px;
+  font-weight: 800;
+  color: #f9fafb;
+}
+
+.score-card.best-card .score-card-val {
+  color: #f59e0b;
+}
+
+/* --------------------------------------------------------------------------
+   Action Toolbar
+   -------------------------------------------------------------------------- */
+.snake-toolbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.toolbar-btn {
+  background: #1f2937;
+  color: #f3f4f6;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(75, 85, 99, 0.4);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease-in-out;
+  flex: 1;
+}
+
+.toolbar-btn:hover {
+  background: #374151;
+  border-color: #6b7280;
+  transform: translateY(-1px);
+}
+
+.toolbar-btn:active {
+  transform: translateY(1px);
+}
+
+.toolbar-btn.btn-restart {
+  background: #059669;
+  border-color: #10b981;
+}
+
+.toolbar-btn.btn-restart:hover {
+  background: #10b981;
+}
+
+.toolbar-btn.btn-sound.muted {
+  color: #9ca3af;
+  background: #111827;
+}
+
+/* --------------------------------------------------------------------------
+   Canvas Container & Board
+   -------------------------------------------------------------------------- */
+.canvas-wrapper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  background: #111827;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  max-height: 500px;
+  background-color: #111827;
+}
+
+/* --------------------------------------------------------------------------
+   Modal Overlays (Pause / Game Over)
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(11, 15, 25, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  animation: modalFade 0.25s ease-out;
+  z-index: 10;
+}
+
+@keyframes modalFade {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-badge {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  margin-bottom: 10px;
+}
+
+.modal-badge.badge-new-record {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.5);
+}
+
+.modal-title {
+  font-size: 36px;
+  font-weight: 900;
+  color: #f9fafb;
+  margin-bottom: 8px;
+}
+
+.modal-stats {
+  font-size: 16px;
+  color: #9ca3af;
+  margin-bottom: 24px;
+}
+
+.modal-stats strong {
+  color: #34d399;
+}
+
+.modal-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  transition: all 0.15s ease-in-out;
+}
+
+.modal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+}
+
+.modal-btn:active {
+  transform: translateY(1px);
+}
+
+/* --------------------------------------------------------------------------
+   Virtual D-Pad (Touch / Mobile)
+   -------------------------------------------------------------------------- */
+.virtual-dpad {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dpad-row {
+  display: flex;
+  gap: 8px;
+}
+
+.dpad-btn {
+  width: 52px;
+  height: 46px;
+  background: #1f2937;
+  color: #9ca3af;
+  border: 1px solid rgba(75, 85, 99, 0.4);
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.1s ease;
+}
+
+.dpad-btn:hover {
+  background: #374151;
+  color: #f3f4f6;
+}
+
+.dpad-btn:active {
+  transform: scale(0.92);
+  background: #10b981;
+  color: white;
+}
+
+/* --------------------------------------------------------------------------
+   Footer Instructions
+   -------------------------------------------------------------------------- */
+.snake-footer {
+  margin-top: 14px;
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+}
+
+kbd {
+  background: #1f2937;
+  color: #d1d5db;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(75, 85, 99, 0.4);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Mobile Adjustments (< 480px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  body {
+    padding: 10px 8px;
+  }
+
+  .snake-title {
+    font-size: 30px;
+  }
+
+  .score-card {
+    min-width: 60px;
+    padding: 4px 8px;
+  }
+
+  .score-card-val {
+    font-size: 16px;
+  }
+
+  .toolbar-btn {
+    font-size: 12px;
+    padding: 8px 6px;
+  }
+}
